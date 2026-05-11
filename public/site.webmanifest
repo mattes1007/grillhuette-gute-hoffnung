@@ -1,0 +1,8 @@
+{
+  "name": "Grillhütte Gute Hoffnung Münster",
+  "short_name": "Gute Hoffnung",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d120d",
+  "theme_color": "#fbbf24"
+}
