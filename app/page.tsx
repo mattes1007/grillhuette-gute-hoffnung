@@ -522,7 +522,7 @@ function Guestbook() {
       } catch {
         if (!cancelled) {
           setRemoteEntries([]);
-          setNotice('Das Live-Gästebuch ist lokal noch nicht verbunden. Online über Cloudflare wird es automatisch aktiv.');
+          setNotice('');
         }
       } finally {
         if (!cancelled) setIsLoading(false);
@@ -535,10 +535,10 @@ function Guestbook() {
     };
   }, []);
 
-  const publicEntries = remoteEntries.filter((entry) => entry.status !== 'pending');
+  const approvedEntries = remoteEntries.filter((entry) => entry.status !== 'pending');
   const entries: GuestbookEntry[] = [
-    ...publicEntries,
-    ...(publicEntries.length === 0
+    ...approvedEntries,
+    ...(approvedEntries.length === 0
       ? guestbookSamples.map((entry) => ({ ...entry, status: 'sample' as const }))
       : []),
   ];
@@ -547,7 +547,7 @@ function Guestbook() {
     event.preventDefault();
 
     if (website.trim()) {
-      setNotice('Danke. Der Eintrag wurde vorgemerkt.');
+      setNotice('Danke. Dein Eintrag wurde vorgemerkt.');
       return;
     }
 
@@ -566,15 +566,15 @@ function Guestbook() {
         body: JSON.stringify({ name, message, website }),
       });
 
-      const data = (await response.json().catch(() => ({}))) as { entry?: GuestbookEntry; error?: string };
+      const data = (await response.json().catch(() => ({}))) as { error?: string };
       if (!response.ok) throw new Error(data.error || 'Der Eintrag konnte nicht gespeichert werden.');
 
       setName('');
       setMessage('');
       setWebsite('');
-      setNotice('Danke! Dein Eintrag wurde gespeichert und erscheint erst nach Freigabe öffentlich im Gästebuch.');
+      setNotice('Danke! Dein Eintrag wurde gespeichert. Er erscheint im Gästebuch, sobald er freigegeben wurde.');
     } catch {
-      setNotice('Das Live-Gästebuch ist lokal oder online noch nicht vollständig verbunden. Bitte Cloudflare D1 und das Binding DB prüfen.');
+      setNotice('Der Eintrag konnte gerade nicht gespeichert werden. Bitte versuche es später noch einmal.');
     } finally {
       setIsSubmitting(false);
     }
@@ -582,14 +582,18 @@ function Guestbook() {
 
   return (
     <section id="gaestebuch" className="mx-auto max-w-7xl px-5 py-20 lg:px-6">
-      <div className="grid gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
-        <div>
-          <SectionHeading {...sections.guestbook} />
+      <div className="grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-start">
+        <div className="lg:sticky lg:top-28">
+          <SectionHeading
+            eyebrow="Gästebuch"
+            title="Stimmen von schönen Tagen."
+            text="Hier ist Platz für Erinnerungen, Grüße und ein kleines Dankeschön nach eurer Feier in der Grillhütte. Jeder Eintrag wird vor der Veröffentlichung kurz geprüft."
+          />
 
-          <form onSubmit={submitEntry} className="mt-8 rounded-[2rem] border border-white/10 bg-white/[0.06] p-5 backdrop-blur">
-            <div className="rounded-[1.45rem] border border-emerald-300/20 bg-emerald-300/10 p-4 text-sm leading-6 text-stone-200">
+          <form onSubmit={submitEntry} className="mt-8 rounded-[2.2rem] border border-white/10 bg-white/[0.06] p-5 shadow-2xl shadow-black/25 backdrop-blur sm:p-6">
+            <div className="rounded-[1.55rem] border border-emerald-300/20 bg-emerald-300/10 p-4 text-sm leading-6 text-stone-200">
               <p className="font-black text-emerald-100">Moderiertes Gästebuch</p>
-              <p className="mt-1">Neue Einträge werden gespeichert, aber erst nach Freigabe öffentlich angezeigt.</p>
+              <p className="mt-1">Dein Eintrag wird gespeichert und erscheint erst nach Freigabe öffentlich. So bleibt das Gästebuch freundlich und sauber.</p>
             </div>
 
             <input
@@ -604,41 +608,72 @@ function Guestbook() {
 
             <label className="mt-5 block text-sm font-black text-stone-200">
               {guestbookContent.nameLabel}
-              <input value={name} onChange={(event) => setName(event.target.value)} className="form-input mt-2" placeholder={guestbookContent.namePlaceholder} maxLength={60} />
+              <input
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                className="form-input mt-2"
+                placeholder={guestbookContent.namePlaceholder}
+                maxLength={60}
+              />
             </label>
+
             <label className="mt-4 block text-sm font-black text-stone-200">
               {guestbookContent.messageLabel}
-              <textarea value={message} onChange={(event) => setMessage(event.target.value)} className="form-input mt-2 min-h-28 resize-y" placeholder={guestbookContent.messagePlaceholder} maxLength={800} />
+              <textarea
+                value={message}
+                onChange={(event) => setMessage(event.target.value)}
+                className="form-input mt-2 min-h-32 resize-y"
+                placeholder={guestbookContent.messagePlaceholder}
+                maxLength={800}
+              />
             </label>
-            <button type="submit" disabled={isSubmitting} className="mt-5 w-full rounded-full bg-amber-300 px-5 py-4 font-black text-stone-950 transition hover:bg-amber-200 disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-stone-500">
+
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="mt-5 w-full rounded-full bg-amber-300 px-5 py-4 font-black text-stone-950 shadow-xl shadow-amber-400/20 transition hover:-translate-y-0.5 hover:bg-amber-200 disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-stone-500 disabled:shadow-none"
+            >
               {isSubmitting ? 'Eintrag wird gespeichert ...' : guestbookContent.submitButton}
             </button>
-            <p className="mt-2 text-sm leading-6 text-stone-400">{guestbookContent.moderationHint}</p>
+
+            <p className="mt-3 text-sm leading-6 text-stone-400">Keine Sorge: Nicht freigegebene Einträge sind für andere Besucher nicht sichtbar.</p>
             {notice ? <p className="mt-4 rounded-2xl border border-white/10 bg-black/25 p-4 text-sm leading-6 text-stone-300">{notice}</p> : null}
           </form>
         </div>
 
         <div className="grid gap-4">
-          <div className="rounded-[2rem] border border-emerald-300/20 bg-emerald-300/10 p-6">
-            <p className="text-sm font-black uppercase tracking-[0.24em] text-emerald-100">{guestbookContent.planKicker}</p>
-            <h3 className="mt-3 text-2xl font-black text-white">{publicEntries.length > 0 ? 'Freigegebene Einträge' : guestbookContent.planTitle}</h3>
-            <p className="mt-3 leading-7 text-stone-300">
-              {publicEntries.length > 0
-                ? 'Hier erscheinen nur Einträge, die vorher freigegeben wurden.'
-                : guestbookContent.planText}
-            </p>
+          <div className="relative overflow-hidden rounded-[2.15rem] border border-amber-200/15 bg-[linear-gradient(135deg,rgba(251,191,36,.13),rgba(16,185,129,.08),rgba(255,255,255,.045))] p-6 shadow-2xl shadow-black/25 backdrop-blur">
+            <div className="absolute right-[-5rem] top-[-5rem] h-44 w-44 rounded-full bg-amber-300/20 blur-3xl" />
+            <div className="relative flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="text-sm font-black uppercase tracking-[0.24em] text-amber-100">Freigegebene Einträge</p>
+                <h3 className="mt-3 text-3xl font-black tracking-tight text-white">Was Gäste über die Hütte sagen</h3>
+                <p className="mt-3 max-w-2xl leading-7 text-stone-300">Alle sichtbaren Einträge wurden vorher geprüft. Neue Einträge landen zuerst im Admin-Bereich.</p>
+              </div>
+              <div className="rounded-[1.35rem] border border-white/10 bg-black/24 px-5 py-4 text-center">
+                <p className="text-3xl font-black text-amber-200">{entries.length}</p>
+                <p className="text-xs font-black uppercase tracking-[0.2em] text-stone-400">sichtbar</p>
+              </div>
+            </div>
           </div>
 
           {isLoading ? (
             <div className="guest-card rounded-[2rem] p-6 text-stone-300">Gästebuch wird geladen ...</div>
           ) : null}
 
+          {!isLoading && entries.length === 0 ? (
+            <div className="guest-card rounded-[2rem] p-6">
+              <p className="text-xl font-black text-white">Noch keine freigegebenen Einträge.</p>
+              <p className="mt-3 leading-7 text-stone-300">Sobald der erste Eintrag freigegeben wurde, erscheint er hier.</p>
+            </div>
+          ) : null}
+
           {entries.map((entry) => (
             <article key={entry.id} className="guest-card rounded-[2rem] p-6">
               <div className="mb-4 flex items-center justify-between gap-3">
                 <span className="text-amber-200">{guestbookContent.stars}</span>
-                {entry.status === 'pending' ? <span className="rounded-full bg-amber-200/12 px-3 py-1 text-xs font-black text-amber-100">wartet auf Freigabe</span> : null}
                 {entry.status === 'sample' ? <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-black text-stone-300">Beispiel</span> : null}
+                {entry.status === 'approved' ? <span className="rounded-full bg-emerald-300/10 px-3 py-1 text-xs font-black text-emerald-100">Freigegeben</span> : null}
               </div>
               <p className="leading-7 text-stone-200">{guestbookContent.quoteOpen}{entry.message}{guestbookContent.quoteClose}</p>
               <div className="mt-5 border-t border-white/10 pt-4">
