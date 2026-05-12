@@ -502,7 +502,6 @@ function Guestbook() {
   const [message, setMessage] = useState('');
   const [website, setWebsite] = useState('');
   const [remoteEntries, setRemoteEntries] = useState<GuestbookEntry[]>([]);
-  const [pendingEntries, setPendingEntries] = useState<GuestbookEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [notice, setNotice] = useState('');
@@ -536,10 +535,10 @@ function Guestbook() {
     };
   }, []);
 
+  const publicEntries = remoteEntries.filter((entry) => entry.status !== 'pending');
   const entries: GuestbookEntry[] = [
-    ...pendingEntries,
-    ...remoteEntries,
-    ...(remoteEntries.length === 0
+    ...publicEntries,
+    ...(publicEntries.length === 0
       ? guestbookSamples.map((entry) => ({ ...entry, status: 'sample' as const }))
       : []),
   ];
@@ -570,32 +569,12 @@ function Guestbook() {
       const data = (await response.json().catch(() => ({}))) as { entry?: GuestbookEntry; error?: string };
       if (!response.ok) throw new Error(data.error || 'Der Eintrag konnte nicht gespeichert werden.');
 
-      const entry: GuestbookEntry = data.entry || {
-        id: String(Date.now()),
-        name: name.trim(),
-        message: message.trim(),
-        date: new Date().toISOString(),
-        status: 'pending',
-      };
-
-      setPendingEntries((current) => [{ ...entry, status: 'pending' }, ...current]);
       setName('');
       setMessage('');
       setWebsite('');
-      setNotice('Danke! Dein Eintrag wurde gespeichert und erscheint nach Freigabe im Gästebuch.');
+      setNotice('Danke! Dein Eintrag wurde gespeichert und erscheint erst nach Freigabe öffentlich im Gästebuch.');
     } catch {
-      const localPreview: GuestbookEntry = {
-        id: `local-${Date.now()}`,
-        name: name.trim(),
-        message: message.trim(),
-        date: new Date().toISOString(),
-        status: 'pending',
-      };
-      setPendingEntries((current) => [localPreview, ...current]);
-      setName('');
-      setMessage('');
-      setWebsite('');
-      setNotice('Lokal vorgemerkt. Sobald Cloudflare D1 verbunden ist, werden Einträge online gespeichert und moderiert.');
+      setNotice('Das Live-Gästebuch ist lokal oder online noch nicht vollständig verbunden. Bitte Cloudflare D1 und das Binding DB prüfen.');
     } finally {
       setIsSubmitting(false);
     }
@@ -642,9 +621,9 @@ function Guestbook() {
         <div className="grid gap-4">
           <div className="rounded-[2rem] border border-emerald-300/20 bg-emerald-300/10 p-6">
             <p className="text-sm font-black uppercase tracking-[0.24em] text-emerald-100">{guestbookContent.planKicker}</p>
-            <h3 className="mt-3 text-2xl font-black text-white">{remoteEntries.length > 0 ? 'Freigegebene Einträge' : guestbookContent.planTitle}</h3>
+            <h3 className="mt-3 text-2xl font-black text-white">{publicEntries.length > 0 ? 'Freigegebene Einträge' : guestbookContent.planTitle}</h3>
             <p className="mt-3 leading-7 text-stone-300">
-              {remoteEntries.length > 0
+              {publicEntries.length > 0
                 ? 'Hier erscheinen nur Einträge, die vorher freigegeben wurden.'
                 : guestbookContent.planText}
             </p>
