@@ -35,13 +35,13 @@
       "Grillplatz"
     ],
     "openGraphDescription": "Grillhütte am Waldrand in Münster für Feiern, Grillabende und Veranstaltungen. Anfrage bequem per WhatsApp oder E-Mail vorbereiten.",
-    "openGraphImage": "/optimized/og-grillhuette.webp",
+    "openGraphImage": "/og-grillhuette.jpg",
     "openGraphImageAlt": "Grillhütte Gute Hoffnung Münster",
     "locale": "de_DE"
   },
   "hero": {
-    "image": "/optimized/hero-grillhuette.webp",
-    "imageWebp": "/optimized/hero-grillhuette.webp",
+    "image": "/hero-grillhuette.jpg",
+    "imageWebp": "/hero-grillhuette.webp",
     "imageAlt": "Grillhütte Gute Hoffnung Münster am Waldrand",
     "priceSuffix": "pro Tag",
     "titleLine1": "Grillhütte",
@@ -217,105 +217,105 @@
   ],
   "galleryImages": [
     {
-      "src": "/optimized/hero-grillhuette.webp",
+      "src": "/hero-grillhuette.jpg",
       "title": "Grillhütte am Waldrand",
       "alt": "Grillhütte Gute Hoffnung Münster am Waldrand",
       "text": "Der erste Eindruck: Natur, Ruhe und viel Platz für einen schönen Tag."
     },
     {
-      "src": "/gallery/optimized/sitzgruppe.webp",
+      "src": "/gallery/sitzgruppe.webp",
       "title": "Außenbereich",
       "alt": "Außenansicht der Grillhütte Gute Hoffnung Münster",
       "text": "Freisitz, Außengelände und kurze Wege — ideal für Feiern im Grünen."
     },
     {
-      "src": "/gallery/optimized/seilbahn1.webp",
+      "src": "/gallery/seilbahn1.webp",
       "title": "Seilbahn",
       "alt": "Seilbahn auf dem Außengelände der Grillhütte Gute Hoffnung Münster",
       "text": "Für Kinder oft das Highlight des Tages."
     },
     {
-      "src": "/gallery/optimized/seilbahn2.webp",
+      "src": "/gallery/seilbahn2.webp",
       "title": "Rampe zur Seilbahn",
       "alt": "Spielbereich mit Seilbahn an der Grillhütte Gute Hoffnung Münster",
       "text": "Immer schön aufpassen beim hoch laufen. Es könnte jemand angerauscht kommen ;-)"
     },
     {
-      "src": "/gallery/optimized/seilbahn3.webp",
+      "src": "/gallery/seilbahn3.webp",
       "title": "Seilbahn",
       "alt": "Außengelände mit Seilbahn bei der Grillhütte Gute Hoffnung Münster",
       "text": "Naturkulisse statt Betonhof — Da geht sie ab die wilde Fahrt !!!"
     },
     {
-      "src": "/gallery/optimized/foerderturm.webp",
+      "src": "/gallery/foerderturm.webp",
       "title": "Förderturm",
       "alt": "Förderturm",
       "text": "Hier steht ein Modell des Förderturms der alten Braunkohle Grube, der schon auf so manchen Umzug seine Runden gedreht hat."
     },
     {
-      "src": "/gallery/optimized/schaukel.webp",
+      "src": "/gallery/schaukel.webp",
       "title": "Schaukel",
       "alt": "Schaukel",
       "text": "Hier kann nach Herzenslust geschaukelt werde"
     },
     {
-      "src": "/gallery/optimized/spielplatz.webp",
+      "src": "/gallery/spielplatz.webp",
       "title": "Spielpaltz",
       "alt": "Spielplatz",
       "text": "Hier können sie die Kinder austoben. Wippen, klettern, baggern, schaufeln ....."
     },
     {
-      "src": "/gallery/optimized/grillhuette_front1.webp",
+      "src": "/gallery/grillhuette_front1.webp",
       "title": "Grillhütte von vorne mit Freisitz",
       "text": "Die Hütte bietet innen Platz für bis zu 50 Personen. Im Freisitz haben auch noch mal 40 Platz"
     },
     {
-      "src": "/gallery/optimized/grillhuette_left.webp",
+      "src": "/gallery/grillhuette_left.webp",
       "title": "Seitenansicht Grillhütte"
     },
     {
-      "src": "/gallery/optimized/grillhuette_side.webp",
+      "src": "/gallery/grillhuette_side.webp",
       "title": "Grillhütte mit Sitzgruppe"
     },
     {
-      "src": "/gallery/optimized/sitzgruppe.webp",
+      "src": "/gallery/sitzgruppe.webp",
       "title": "Sitzgruppe",
       "alt": "Sitzgruppe",
       "text": "Hier unsere neu gebaute Sitzgruppe im Freien"
     },
     {
-      "src": "/gallery/optimized/torwand.webp",
+      "src": "/gallery/torwand.webp",
       "title": "Torwand",
       "text": "Hier könnt ihr Eure Skills im Torwandschießen verbessern"
     },
     {
-      "src": "/gallery/optimized/foerderturm1.webp",
+      "src": "/gallery/foerderturm1.webp",
       "title": "Braunkohlengrube Hoffnung"
     },
     {
-      "src": "/gallery/optimized/asche.webp",
+      "src": "/gallery/asche.webp",
       "title": "Ascheplatz",
       "text": "Folgt dem Schild und entsorgt da die Asche vom Grill"
     },
     {
-      "src": "/gallery/optimized/grill.webp",
+      "src": "/gallery/grill.webp",
       "title": "Grill",
       "alt": "Grill",
       "text": "Innen ein großer Grill mit Kamin und aktivem Rauchabzug. Auch ein großer Spieß ist vorhanden um Spanferkel oder Rollbraten zuzubereiten."
     },
     {
-      "src": "/gallery/optimized/grill1.webp",
+      "src": "/gallery/grill1.webp",
       "title": "Grillen ohne Ende",
       "alt": "Grillen ohne Ende",
       "text": "....und auf dem Grill geht einiges :-) "
     },
     {
-      "src": "/gallery/optimized/toilette.webp",
+      "src": "/gallery/toilette.webp",
       "title": "Toilettenanlage",
       "text": "Besonders stolz sind wir auf unsere Toiletten Anlage, die unsere alten Plumpsklo's erstetzt hat :-)"
     },
     {
-      "src": "/gallery/optimized/toilette1.webp",
+      "src": "/gallery/toilette1.webp",
       "title": "Toilette von innen",
       "alt": "Toilette von innen",
       "text": ""
