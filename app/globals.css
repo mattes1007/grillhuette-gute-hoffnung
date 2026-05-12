@@ -93,21 +93,30 @@ a {
   backdrop-filter: blur(22px) saturate(1.12);
 }
 
+/*
+  Hero-Fix:
+  Der Titel bleibt groß, aber "Hoffnung" läuft nicht mehr zu weit in die rechte Spalte
+  und die Unterlänge vom g wird nicht mehr abgeschnitten.
+*/
 .hero-headline {
-  font-size: clamp(4rem, 15.2vw, 10rem);
-  line-height: 0.98;
-  letter-spacing: -0.055em;
+  display: block;
+  max-width: min(100%, 48rem);
+  font-size: clamp(3.8rem, 10.8vw, 8.6rem);
+  line-height: 1.08;
+  letter-spacing: -0.045em;
   text-wrap: balance;
   overflow: visible;
-  padding-right: 0.08em;
-  padding-bottom: 0.16em;
+  padding-right: 0.18em;
+  padding-bottom: 0.24em;
 }
 
 .hero-gradient {
   display: inline-block;
+  max-width: 100%;
   overflow: visible;
-  padding-right: 0.05em;
-  padding-bottom: 0.04em;
+  padding-right: 0.14em;
+  padding-bottom: 0.12em;
+  line-height: 1.04;
   background: linear-gradient(92deg, #fde68a 0%, #facc15 38%, #bef264 66%, #86efac 100%);
   background-size: 160% auto;
   -webkit-background-clip: text;
@@ -334,18 +343,45 @@ iframe {
   }
 }
 
+@media (min-width: 1024px) {
+  .hero-headline {
+    font-size: clamp(5.6rem, 8.9vw, 8.4rem);
+    max-width: 46rem;
+    line-height: 1.08;
+    letter-spacing: -0.045em;
+  }
+}
+
+@media (min-width: 1280px) {
+  .hero-headline {
+    font-size: clamp(6.2rem, 8.2vw, 8.7rem);
+    max-width: 48rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .hero-headline {
+    max-width: 100%;
+    font-size: clamp(3.85rem, 16.4vw, 6.6rem);
+    line-height: 1.06;
+    letter-spacing: -0.045em;
+    padding-right: 0.12em;
+    padding-bottom: 0.22em;
+  }
+}
+
 @media (max-width: 420px) {
   .hero-headline {
-    font-size: clamp(3.45rem, 16.9vw, 4.7rem);
-    line-height: 1.02;
-    letter-spacing: -0.045em;
-    padding-right: 0.04em;
-    padding-bottom: 0.16em;
+    font-size: clamp(3.25rem, 15.8vw, 4.55rem);
+    line-height: 1.07;
+    letter-spacing: -0.038em;
+    padding-right: 0.1em;
+    padding-bottom: 0.22em;
   }
 
   .hero-gradient {
-    padding-right: 0.03em;
-    padding-bottom: 0.03em;
+    padding-right: 0.08em;
+    padding-bottom: 0.1em;
   }
 }
 
