@@ -361,7 +361,7 @@ function Inquiry() {
   const whatsappHref = `https://wa.me/${site.whatsappNumber}?text=${encodeURIComponent(inquiryText)}`;
   const mailHref = `mailto:${site.email}?subject=${encodeURIComponent(inquiryContent.emailSubject)}&body=${encodeURIComponent(inquiryText)}`;
   const completion = getCompletion(form);
-  const canSend = Boolean(form.name.trim() && (form.phone.trim() || form.email.trim()) && form.date.trim());
+  const canSend = Object.values(form).every((value) => value.trim().length > 0);
 
   function updateField(field: keyof InquiryForm, value: string) {
     setForm((current) => ({ ...current, [field]: value }));
@@ -434,47 +434,47 @@ function Inquiry() {
           <div className="field-hint-box mt-7">
             <p className="field-hint-box__eyebrow">Pflichtangaben</p>
             <p className="field-hint-box__text">
-              Bitte mindestens <strong>Name</strong>, <strong>gewünschtes Datum</strong> und <strong>Telefon oder E-Mail</strong> angeben. Ohne Telefonnummer oder E-Mail kann keine Anfrage abgesendet werden.
+              Bitte alle Felder ausfüllen. Für eine verbindliche Anfrage brauchen wir <strong>Name</strong>, <strong>Telefon</strong>, <strong>E-Mail</strong>, <strong>Wunschtermin</strong>, <strong>Zeitraum</strong>, <strong>Personenzahl</strong>, <strong>Anlass</strong> und eine kurze <strong>Nachricht</strong>.
             </p>
           </div>
 
           <div className="mt-7 grid gap-4 sm:grid-cols-2">
             <FormField label={inquiryContent.fields.name.label} htmlFor="inquiry-name" required>
-              <input id="inquiry-name" value={form.name} onChange={(event) => updateField('name', event.target.value)} className="form-input" placeholder={inquiryContent.fields.name.placeholder} autoComplete="name" />
+              <input id="inquiry-name" required value={form.name} onChange={(event) => updateField('name', event.target.value)} className="form-input" placeholder={inquiryContent.fields.name.placeholder} autoComplete="name" />
             </FormField>
 
-            <FormField label={inquiryContent.fields.phone.label} htmlFor="inquiry-phone" badge="Pflicht oder E-Mail">
-              <input id="inquiry-phone" type="tel" value={form.phone} onChange={(event) => updateField('phone', event.target.value)} className="form-input" placeholder={inquiryContent.fields.phone.placeholder} autoComplete="tel" />
+            <FormField label={inquiryContent.fields.phone.label} htmlFor="inquiry-phone" required>
+              <input id="inquiry-phone" type="tel" required value={form.phone} onChange={(event) => updateField('phone', event.target.value)} className="form-input" placeholder={inquiryContent.fields.phone.placeholder} autoComplete="tel" />
             </FormField>
 
-            <FormField label={inquiryContent.fields.email.label} htmlFor="inquiry-email" badge="Pflicht oder Telefon">
-              <input id="inquiry-email" type="email" value={form.email} onChange={(event) => updateField('email', event.target.value)} className="form-input" placeholder={inquiryContent.fields.email.placeholder} autoComplete="email" />
+            <FormField label={inquiryContent.fields.email.label} htmlFor="inquiry-email" required>
+              <input id="inquiry-email" type="email" required value={form.email} onChange={(event) => updateField('email', event.target.value)} className="form-input" placeholder={inquiryContent.fields.email.placeholder} autoComplete="email" />
             </FormField>
 
             <FormField label={inquiryContent.fields.date.label} htmlFor="inquiry-date" required>
-              <input id="inquiry-date" type="date" value={form.date} onChange={(event) => updateField('date', event.target.value)} className="form-input" />
+              <input id="inquiry-date" type="date" required value={form.date} onChange={(event) => updateField('date', event.target.value)} className="form-input" />
             </FormField>
 
-            <FormField label={inquiryContent.fields.time.label} htmlFor="inquiry-time">
-              <input id="inquiry-time" value={form.time} onChange={(event) => updateField('time', event.target.value)} className="form-input" placeholder={inquiryContent.fields.time.placeholder} />
+            <FormField label={inquiryContent.fields.time.label} htmlFor="inquiry-time" required>
+              <input id="inquiry-time" required value={form.time} onChange={(event) => updateField('time', event.target.value)} className="form-input" placeholder={inquiryContent.fields.time.placeholder} />
             </FormField>
 
-            <FormField label={inquiryContent.fields.people.label} htmlFor="inquiry-people">
-              <input id="inquiry-people" inputMode="numeric" value={form.people} onChange={(event) => updateField('people', event.target.value)} className="form-input" placeholder={inquiryContent.fields.people.placeholder} />
+            <FormField label={inquiryContent.fields.people.label} htmlFor="inquiry-people" required>
+              <input id="inquiry-people" inputMode="numeric" required value={form.people} onChange={(event) => updateField('people', event.target.value)} className="form-input" placeholder={inquiryContent.fields.people.placeholder} />
             </FormField>
           </div>
 
-          <FormField label={inquiryContent.fields.occasion.label} htmlFor="inquiry-occasion" className="mt-4">
-            <input id="inquiry-occasion" value={form.occasion} onChange={(event) => updateField('occasion', event.target.value)} className="form-input" placeholder={inquiryContent.fields.occasion.placeholder} />
+          <FormField label={inquiryContent.fields.occasion.label} htmlFor="inquiry-occasion" className="mt-4" required>
+            <input id="inquiry-occasion" required value={form.occasion} onChange={(event) => updateField('occasion', event.target.value)} className="form-input" placeholder={inquiryContent.fields.occasion.placeholder} />
           </FormField>
 
-          <FormField label={inquiryContent.fields.message.label} htmlFor="inquiry-message" className="mt-4">
-            <textarea id="inquiry-message" value={form.message} onChange={(event) => updateField('message', event.target.value)} className="form-input min-h-32 resize-y" placeholder={inquiryContent.fields.message.placeholder} />
+          <FormField label={inquiryContent.fields.message.label} htmlFor="inquiry-message" className="mt-4" required>
+            <textarea id="inquiry-message" required value={form.message} onChange={(event) => updateField('message', event.target.value)} className="form-input min-h-32 resize-y" placeholder={inquiryContent.fields.message.placeholder} />
           </FormField>
 
           {!canSend ? (
             <p className="mt-5 rounded-[1.25rem] border border-amber-200/20 bg-amber-200/10 px-4 py-3 text-sm font-semibold text-amber-100">
-              {inquiryContent.requiredHint}
+              Bitte alle Pflichtfelder ausfüllen. Erst danach werden WhatsApp- und E-Mail-Anfrage aktiviert.
             </p>
           ) : null}
 
