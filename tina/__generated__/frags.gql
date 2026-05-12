@@ -1,0 +1,316 @@
+fragment SiteContentParts on SiteContent {
+  __typename
+  site {
+    __typename
+    name
+    shortName
+    logoText
+    location
+    address
+    claim
+    subclaim
+    description
+    phone
+    whatsappNumber
+    phoneDisplay
+    email
+    facebookUrl
+    price
+    contactTimes
+    googleCalendarSrc
+  }
+  meta {
+    __typename
+    metadataBase
+    titleSuffix
+    description
+    keywords
+    openGraphDescription
+    openGraphImage
+    openGraphImageAlt
+    locale
+  }
+  hero {
+    __typename
+    image
+    imageWebp
+    imageAlt
+    priceSuffix
+    titleLine1
+    titleLine2
+    cardKicker
+    cardTitle
+    cardText
+  }
+  ui {
+    __typename
+    headerWhatsapp
+    headerInquiry
+    heroPrimaryButton
+    heroWhatsappButton
+    heroGalleryButton
+    galleryInquiryButton
+    requiredLabel
+    faqOpenIcon
+    mobileCall
+    mobileInquiry
+    mobileWhatsapp
+  }
+  navItems {
+    __typename
+    href
+    label
+  }
+  trustItems {
+    __typename
+    icon
+    title
+    text
+  }
+  sections {
+    __typename
+    experience {
+      __typename
+      eyebrow
+      title
+      text
+    }
+    gallery {
+      __typename
+      eyebrow
+      title
+      text
+    }
+    features {
+      __typename
+      eyebrow
+      title
+      text
+    }
+    inquiry {
+      __typename
+      eyebrow
+      title
+      text
+    }
+    guestbook {
+      __typename
+      eyebrow
+      title
+      text
+    }
+    faq {
+      __typename
+      eyebrow
+      title
+      text
+    }
+    contact {
+      __typename
+      eyebrow
+      title
+      text
+    }
+  }
+  heroStats {
+    __typename
+    value
+    label
+    note
+  }
+  moments {
+    __typename
+    kicker
+    title
+    text
+  }
+  features {
+    __typename
+    icon
+    title
+    text
+  }
+  galleryImages {
+    __typename
+    src
+    title
+    alt
+    text
+  }
+  mapSection {
+    __typename
+    enabled
+    eyebrow
+    title
+    text
+    addressLabel
+    address
+    parkingTitle
+    parkingNote
+    accessTitle
+    accessNote
+    mapLink
+    mapButtonLabel
+    embedSrc
+    iframeTitle
+    placeholderTitle
+    placeholderText
+  }
+  processSteps {
+    __typename
+    number
+    title
+    text
+  }
+  inquiryContent {
+    __typename
+    emailSubject
+    calendarKicker
+    calendarTitle
+    calendarButton
+    calendarIframeTitle
+    calendarMobileIcon
+    calendarMobileTitle
+    calendarMobileText
+    calendarMobileButton
+    formKicker
+    formTitle
+    formText
+    progressTitle
+    progressSuffix
+    requiredHint
+    whatsappButton
+    emailButton
+    previewSummary
+    messageIntro
+    fields {
+      __typename
+      name {
+        __typename
+        label
+        placeholder
+      }
+      phone {
+        __typename
+        label
+        placeholder
+      }
+      email {
+        __typename
+        label
+        placeholder
+      }
+      date {
+        __typename
+        label
+        placeholder
+      }
+      time {
+        __typename
+        label
+        placeholder
+      }
+      people {
+        __typename
+        label
+        placeholder
+      }
+      occasion {
+        __typename
+        label
+        placeholder
+      }
+      message {
+        __typename
+        label
+        placeholder
+      }
+    }
+    messageLabels {
+      __typename
+      name
+      phone
+      email
+      date
+      time
+      people
+      occasion
+      message
+    }
+  }
+  guestbookSamples {
+    __typename
+    id
+    name
+    date
+    message
+  }
+  guestbookContent {
+    __typename
+    nameLabel
+    namePlaceholder
+    messageLabel
+    messagePlaceholder
+    submitButton
+    moderationHint
+    validationMessage
+    successMessage
+    planKicker
+    planTitle
+    planText
+    stars
+    localLabel
+    quoteOpen
+    quoteClose
+  }
+  faqs {
+    __typename
+    question
+    answer
+  }
+  contactContent {
+    __typename
+    callLabel
+    whatsappLabel
+    whatsappValue
+    emailLabel
+    hoursTitle
+    hoursText
+    fastTitle
+    fastInquiryLabel
+    fastWhatsappLabel
+    fastFacebookLabel
+    fastText
+  }
+  footerContent {
+    __typename
+    copyrightPrefix
+    facebookLabel
+    impressumLabel
+    datenschutzLabel
+  }
+  legal {
+    __typename
+    backLabel
+    impressum {
+      __typename
+      title
+      intro
+      sections {
+        __typename
+        title
+        text
+      }
+    }
+    datenschutz {
+      __typename
+      title
+      intro
+      sections {
+        __typename
+        title
+        text
+      }
+    }
+  }
+}

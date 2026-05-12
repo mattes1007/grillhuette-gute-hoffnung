@@ -38,7 +38,7 @@ type GuestbookEntry = {
   name: string;
   message: string;
   date: string;
-  status?: 'approved' | 'pending' | 'sample';
+  status?: 'local' | 'sample';
 };
 
 const initialInquiry: InquiryForm = {
@@ -52,18 +52,11 @@ const initialInquiry: InquiryForm = {
   message: '',
 };
 
-const guestbookApiPath = '/api/guestbook';
+const guestbookStorageKey = 'grillhuette-gute-hoffnung-gaestebuch-v2';
 
 function getWebpSource(src?: string) {
   if (!src) return '';
   return src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
-}
-
-function formatGuestbookDate(value?: string) {
-  if (!value) return '';
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return value;
-  return new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(date);
 }
 
 export default function Home() {
@@ -159,7 +152,7 @@ function Header() {
 
 function Hero() {
   return (
-    <section id="start" className="relative isolate min-h-[100svh] overflow-hidden pt-24 sm:pt-28">
+    <section id="start" className="relative isolate min-h-[100svh] overflow-visible pt-24 sm:pt-28">
       <picture>
         <source srcSet={hero.imageWebp || getWebpSource(hero.image)} type="image/webp" />
         <img
@@ -179,7 +172,7 @@ function Hero() {
             <span className="truncate">{site.location} · {site.price} {hero.priceSuffix}</span>
           </div>
 
-          <h1 className="hero-headline font-black text-white">
+          <h1 className="hero-headline max-w-full pb-4 pr-2 font-black leading-[0.96] tracking-[-0.055em] text-white sm:leading-[0.92] sm:tracking-[-0.065em] lg:pr-0">
             {hero.titleLine1}<br />
             <span className="hero-gradient">{hero.titleLine2}</span>
           </h1>
@@ -377,39 +370,28 @@ function Inquiry() {
             <div>
               <p className="text-sm font-black uppercase tracking-[0.24em] text-amber-200">{inquiryContent.calendarKicker}</p>
               <h3 className="mt-2 text-2xl font-black text-white">{inquiryContent.calendarTitle}</h3>
-              <p className="mt-3 max-w-xl leading-7 text-stone-300">Verfügbarkeit direkt im Google Kalender – eingerahmt im Stil der Website.</p>
             </div>
             <a href={site.googleCalendarSrc} target="_blank" rel="noreferrer" className="rounded-full border border-white/15 bg-white/10 px-5 py-3 text-center font-black text-white transition hover:bg-white/15">
               {inquiryContent.calendarButton}
             </a>
           </div>
 
-          <div className="calendar-shell">
-            <div className="calendar-shell__toolbar">
-              <div className="calendar-shell__dots">
-                <span />
-                <span />
-                <span />
-              </div>
-              <p className="calendar-shell__title">Google Kalender · Live-Ansicht</p>
-            </div>
-            <div className="calendar-shell__window">
-              <iframe
-                src={site.googleCalendarSrc}
-                title={inquiryContent.calendarIframeTitle}
-                className="hidden h-[660px] w-full rounded-[1.35rem] md:block"
-                frameBorder="0"
-                scrolling="no"
-              />
-              <div className="grid min-h-[290px] place-items-center rounded-[1.35rem] bg-stone-100 p-6 text-center text-stone-950 md:hidden">
-                <div>
-                  <p className="text-5xl">{inquiryContent.calendarMobileIcon}</p>
-                  <h4 className="mt-4 text-2xl font-black">{inquiryContent.calendarMobileTitle}</h4>
-                  <p className="mt-3 text-stone-700">{inquiryContent.calendarMobileText}</p>
-                  <a href={site.googleCalendarSrc} target="_blank" rel="noreferrer" className="mt-5 inline-flex rounded-full bg-stone-950 px-6 py-3 font-black text-white">
-                    {inquiryContent.calendarMobileButton}
-                  </a>
-                </div>
+          <div className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-white p-2">
+            <iframe
+              src={site.googleCalendarSrc}
+              title={inquiryContent.calendarIframeTitle}
+              className="hidden h-[660px] w-full rounded-[1.35rem] md:block"
+              frameBorder="0"
+              scrolling="no"
+            />
+            <div className="grid min-h-[290px] place-items-center rounded-[1.35rem] bg-stone-100 p-6 text-center text-stone-950 md:hidden">
+              <div>
+                <p className="text-5xl">{inquiryContent.calendarMobileIcon}</p>
+                <h4 className="mt-4 text-2xl font-black">{inquiryContent.calendarMobileTitle}</h4>
+                <p className="mt-3 text-stone-700">{inquiryContent.calendarMobileText}</p>
+                <a href={site.googleCalendarSrc} target="_blank" rel="noreferrer" className="mt-5 inline-flex rounded-full bg-stone-950 px-6 py-3 font-black text-white">
+                  {inquiryContent.calendarMobileButton}
+                </a>
               </div>
             </div>
           </div>
@@ -431,23 +413,16 @@ function Inquiry() {
             </div>
           </div>
 
-          <div className="field-hint-box mt-7">
-            <p className="field-hint-box__eyebrow">Pflichtangaben</p>
-            <p className="field-hint-box__text">
-              Bitte mindestens <strong>Name</strong>, <strong>gewünschtes Datum</strong> und <strong>Telefon oder E-Mail</strong> angeben. Ohne Telefonnummer oder E-Mail kann keine Anfrage abgesendet werden.
-            </p>
-          </div>
-
           <div className="mt-7 grid gap-4 sm:grid-cols-2">
             <FormField label={inquiryContent.fields.name.label} htmlFor="inquiry-name" required>
               <input id="inquiry-name" value={form.name} onChange={(event) => updateField('name', event.target.value)} className="form-input" placeholder={inquiryContent.fields.name.placeholder} autoComplete="name" />
             </FormField>
 
-            <FormField label={inquiryContent.fields.phone.label} htmlFor="inquiry-phone" badge="Pflicht oder E-Mail">
+            <FormField label={inquiryContent.fields.phone.label} htmlFor="inquiry-phone">
               <input id="inquiry-phone" type="tel" value={form.phone} onChange={(event) => updateField('phone', event.target.value)} className="form-input" placeholder={inquiryContent.fields.phone.placeholder} autoComplete="tel" />
             </FormField>
 
-            <FormField label={inquiryContent.fields.email.label} htmlFor="inquiry-email" badge="Pflicht oder Telefon">
+            <FormField label={inquiryContent.fields.email.label} htmlFor="inquiry-email">
               <input id="inquiry-email" type="email" value={form.email} onChange={(event) => updateField('email', event.target.value)} className="form-input" placeholder={inquiryContent.fields.email.placeholder} autoComplete="email" />
             </FormField>
 
@@ -500,105 +475,45 @@ function Inquiry() {
 function Guestbook() {
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
-  const [website, setWebsite] = useState('');
-  const [remoteEntries, setRemoteEntries] = useState<GuestbookEntry[]>([]);
-  const [pendingEntries, setPendingEntries] = useState<GuestbookEntry[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [localEntries, setLocalEntries] = useState<GuestbookEntry[]>([]);
   const [notice, setNotice] = useState('');
 
   useEffect(() => {
-    let cancelled = false;
-
-    async function loadEntries() {
-      setIsLoading(true);
-      try {
-        const response = await fetch(guestbookApiPath, { cache: 'no-store' });
-        if (!response.ok) throw new Error('Guestbook API not available');
-        const data = (await response.json()) as { entries?: GuestbookEntry[] };
-        if (!cancelled) {
-          setRemoteEntries((data.entries || []).map((entry) => ({ ...entry, status: 'approved' })));
-          setNotice('');
-        }
-      } catch {
-        if (!cancelled) {
-          setRemoteEntries([]);
-          setNotice('Das Live-Gästebuch ist lokal noch nicht verbunden. Online über Cloudflare wird es automatisch aktiv.');
-        }
-      } finally {
-        if (!cancelled) setIsLoading(false);
-      }
+    try {
+      const raw = window.localStorage.getItem(guestbookStorageKey);
+      if (raw) setLocalEntries(JSON.parse(raw) as GuestbookEntry[]);
+    } catch {
+      setLocalEntries([]);
     }
-
-    loadEntries();
-    return () => {
-      cancelled = true;
-    };
   }, []);
 
   const entries: GuestbookEntry[] = [
-    ...pendingEntries,
-    ...remoteEntries,
-    ...(remoteEntries.length === 0
-      ? guestbookSamples.map((entry) => ({ ...entry, status: 'sample' as const }))
-      : []),
+    ...localEntries,
+    ...guestbookSamples.map((entry) => ({ ...entry, status: 'sample' as const })),
   ];
 
-  async function submitEntry(event: FormEvent<HTMLFormElement>) {
+  function submitEntry(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    if (website.trim()) {
-      setNotice('Danke. Der Eintrag wurde vorgemerkt.');
-      return;
-    }
 
     if (!name.trim() || !message.trim()) {
       setNotice(guestbookContent.validationMessage);
       return;
     }
 
-    setIsSubmitting(true);
-    setNotice('');
+    const entry: GuestbookEntry = {
+      id: String(Date.now()),
+      name: name.trim(),
+      message: message.trim(),
+      date: new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date()),
+      status: 'local',
+    };
 
-    try {
-      const response = await fetch(guestbookApiPath, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, message, website }),
-      });
-
-      const data = (await response.json().catch(() => ({}))) as { entry?: GuestbookEntry; error?: string };
-      if (!response.ok) throw new Error(data.error || 'Der Eintrag konnte nicht gespeichert werden.');
-
-      const entry: GuestbookEntry = data.entry || {
-        id: String(Date.now()),
-        name: name.trim(),
-        message: message.trim(),
-        date: new Date().toISOString(),
-        status: 'pending',
-      };
-
-      setPendingEntries((current) => [{ ...entry, status: 'pending' }, ...current]);
-      setName('');
-      setMessage('');
-      setWebsite('');
-      setNotice('Danke! Dein Eintrag wurde gespeichert und erscheint nach Freigabe im Gästebuch.');
-    } catch {
-      const localPreview: GuestbookEntry = {
-        id: `local-${Date.now()}`,
-        name: name.trim(),
-        message: message.trim(),
-        date: new Date().toISOString(),
-        status: 'pending',
-      };
-      setPendingEntries((current) => [localPreview, ...current]);
-      setName('');
-      setMessage('');
-      setWebsite('');
-      setNotice('Lokal vorgemerkt. Sobald Cloudflare D1 verbunden ist, werden Einträge online gespeichert und moderiert.');
-    } finally {
-      setIsSubmitting(false);
-    }
+    const nextEntries = [entry, ...localEntries];
+    setLocalEntries(nextEntries);
+    window.localStorage.setItem(guestbookStorageKey, JSON.stringify(nextEntries));
+    setName('');
+    setMessage('');
+    setNotice(guestbookContent.successMessage);
   }
 
   return (
@@ -608,31 +523,16 @@ function Guestbook() {
           <SectionHeading {...sections.guestbook} />
 
           <form onSubmit={submitEntry} className="mt-8 rounded-[2rem] border border-white/10 bg-white/[0.06] p-5 backdrop-blur">
-            <div className="rounded-[1.45rem] border border-emerald-300/20 bg-emerald-300/10 p-4 text-sm leading-6 text-stone-200">
-              <p className="font-black text-emerald-100">Moderiertes Gästebuch</p>
-              <p className="mt-1">Neue Einträge werden gespeichert, aber erst nach Freigabe öffentlich angezeigt.</p>
-            </div>
-
-            <input
-              aria-hidden="true"
-              tabIndex={-1}
-              autoComplete="off"
-              value={website}
-              onChange={(event) => setWebsite(event.target.value)}
-              className="hidden"
-              name="website"
-            />
-
-            <label className="mt-5 block text-sm font-black text-stone-200">
+            <label className="block text-sm font-black text-stone-200">
               {guestbookContent.nameLabel}
-              <input value={name} onChange={(event) => setName(event.target.value)} className="form-input mt-2" placeholder={guestbookContent.namePlaceholder} maxLength={60} />
+              <input value={name} onChange={(event) => setName(event.target.value)} className="form-input mt-2" placeholder={guestbookContent.namePlaceholder} />
             </label>
             <label className="mt-4 block text-sm font-black text-stone-200">
               {guestbookContent.messageLabel}
-              <textarea value={message} onChange={(event) => setMessage(event.target.value)} className="form-input mt-2 min-h-28 resize-y" placeholder={guestbookContent.messagePlaceholder} maxLength={800} />
+              <textarea value={message} onChange={(event) => setMessage(event.target.value)} className="form-input mt-2 min-h-28 resize-y" placeholder={guestbookContent.messagePlaceholder} />
             </label>
-            <button type="submit" disabled={isSubmitting} className="mt-5 w-full rounded-full bg-amber-300 px-5 py-4 font-black text-stone-950 transition hover:bg-amber-200 disabled:cursor-not-allowed disabled:bg-white/10 disabled:text-stone-500">
-              {isSubmitting ? 'Eintrag wird gespeichert ...' : guestbookContent.submitButton}
+            <button type="submit" className="mt-5 w-full rounded-full bg-amber-300 px-5 py-4 font-black text-stone-950 transition hover:bg-amber-200">
+              {guestbookContent.submitButton}
             </button>
             <p className="mt-2 text-sm leading-6 text-stone-400">{guestbookContent.moderationHint}</p>
             {notice ? <p className="mt-4 rounded-2xl border border-white/10 bg-black/25 p-4 text-sm leading-6 text-stone-300">{notice}</p> : null}
@@ -642,29 +542,20 @@ function Guestbook() {
         <div className="grid gap-4">
           <div className="rounded-[2rem] border border-emerald-300/20 bg-emerald-300/10 p-6">
             <p className="text-sm font-black uppercase tracking-[0.24em] text-emerald-100">{guestbookContent.planKicker}</p>
-            <h3 className="mt-3 text-2xl font-black text-white">{remoteEntries.length > 0 ? 'Freigegebene Einträge' : guestbookContent.planTitle}</h3>
-            <p className="mt-3 leading-7 text-stone-300">
-              {remoteEntries.length > 0
-                ? 'Hier erscheinen nur Einträge, die vorher freigegeben wurden.'
-                : guestbookContent.planText}
-            </p>
+            <h3 className="mt-3 text-2xl font-black text-white">{guestbookContent.planTitle}</h3>
+            <p className="mt-3 leading-7 text-stone-300">{guestbookContent.planText}</p>
           </div>
-
-          {isLoading ? (
-            <div className="guest-card rounded-[2rem] p-6 text-stone-300">Gästebuch wird geladen ...</div>
-          ) : null}
 
           {entries.map((entry) => (
             <article key={entry.id} className="guest-card rounded-[2rem] p-6">
               <div className="mb-4 flex items-center justify-between gap-3">
                 <span className="text-amber-200">{guestbookContent.stars}</span>
-                {entry.status === 'pending' ? <span className="rounded-full bg-amber-200/12 px-3 py-1 text-xs font-black text-amber-100">wartet auf Freigabe</span> : null}
-                {entry.status === 'sample' ? <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-black text-stone-300">Beispiel</span> : null}
+                {entry.status === 'local' ? <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-black text-stone-300">{guestbookContent.localLabel}</span> : null}
               </div>
               <p className="leading-7 text-stone-200">{guestbookContent.quoteOpen}{entry.message}{guestbookContent.quoteClose}</p>
               <div className="mt-5 border-t border-white/10 pt-4">
                 <p className="font-black text-white">{entry.name}</p>
-                <p className="text-sm text-stone-400">{formatGuestbookDate(entry.date)}</p>
+                <p className="text-sm text-stone-400">{entry.date}</p>
               </div>
             </article>
           ))}
@@ -808,13 +699,12 @@ function InfoBox({ title, text }: { title: string; text: string }) {
   );
 }
 
-function FormField({ label, htmlFor, className = '', required = false, badge, children }: { label: string; htmlFor: string; className?: string; required?: boolean; badge?: string; children: ReactNode }) {
+function FormField({ label, htmlFor, className = '', required = false, children }: { label: string; htmlFor: string; className?: string; required?: boolean; children: ReactNode }) {
   return (
     <label className={`block ${className}`} htmlFor={htmlFor}>
-      <span className="flex flex-wrap items-center gap-2 text-sm font-bold text-stone-200">
+      <span className="flex items-center gap-2 text-sm font-bold text-stone-200">
         {label}
-        {required ? <span className="rounded-full bg-amber-200/12 px-2 py-0.5 text-[0.65rem] uppercase tracking-[0.18em] text-amber-100">Pflicht</span> : null}
-        {!required && badge ? <span className="rounded-full bg-white/10 px-2 py-0.5 text-[0.65rem] uppercase tracking-[0.18em] text-stone-300">{badge}</span> : null}
+        {required ? <span className="rounded-full bg-amber-200/12 px-2 py-0.5 text-[0.65rem] uppercase tracking-[0.18em] text-amber-100">{ui.requiredLabel}</span> : null}
       </span>
       <span className="mt-2 block">{children}</span>
     </label>

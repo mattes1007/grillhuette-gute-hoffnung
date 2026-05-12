@@ -1,62 +1,89 @@
-// Cloudflare Pages Function: /api/guestbook
-// Vorbereitung für ein echtes moderiertes Gästebuch mit Cloudflare D1.
-// Zum Aktivieren in Cloudflare Pages eine D1-Datenbank als Binding GUESTBOOK_DB verbinden
-// und die Tabelle aus db/schema.sql anlegen.
-
-function json(data, init = {}) {
+function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
-    ...init,
+    status,
     headers: {
-      'content-type': 'application/json; charset=utf-8',
-      'cache-control': 'no-store',
-      ...(init.headers || {}),
+      'Content-Type': 'application/json; charset=utf-8',
+      'Cache-Control': 'no-store',
     },
   });
 }
 
-function clean(value, maxLength) {
-  return String(value || '').trim().slice(0, maxLength);
+function cleanText(value, maxLength) {
+  return String(value || '')
+    .replace(/[\u0000-\u001F\u007F]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, maxLength);
 }
 
 export async function onRequestGet({ env }) {
-  if (!env.GUESTBOOK_DB) {
-    return json({ entries: [], mode: 'demo', message: 'D1 Binding GUESTBOOK_DB fehlt noch.' });
+  if (!env.DB) {
+    return json({ entries: [], error: 'D1 binding DB fehlt.' }, 500);
   }
 
-  const { results } = await env.GUESTBOOK_DB.prepare(
+  const { results } = await env.DB.prepare(
     `SELECT id, name, message, created_at AS date
      FROM guestbook_entries
      WHERE approved = 1
      ORDER BY created_at DESC
-     LIMIT 24`
+     LIMIT 50`
   ).all();
 
-  return json({ entries: results || [], mode: 'live' });
+  return json({
+    entries: (results || []).map((entry) => ({
+      id: entry.id,
+      name: entry.name,
+      message: entry.message,
+      date: entry.date,
+      status: 'approved',
+    })),
+  });
 }
 
 export async function onRequestPost({ request, env }) {
-  if (!env.GUESTBOOK_DB) {
-    return json({ ok: false, message: 'D1 Binding GUESTBOOK_DB fehlt noch.' }, { status: 501 });
+  if (!env.DB) {
+    return json({ error: 'D1 binding DB fehlt.' }, 500);
   }
 
   let body;
   try {
     body = await request.json();
   } catch {
-    return json({ ok: false, message: 'Ungültige Anfrage.' }, { status: 400 });
+    return json({ error: 'Ungültige Anfrage.' }, 400);
   }
 
-  const name = clean(body.name, 60);
-  const message = clean(body.message, 280);
-
-  if (name.length < 2 || message.length < 8) {
-    return json({ ok: false, message: 'Name oder Nachricht ist zu kurz.' }, { status: 400 });
+  // Honeypot gegen einfache Spam-Bots: echte Besucher sehen dieses Feld nicht.
+  if (cleanText(body.website, 200)) {
+    return json({ ok: true, entry: null });
   }
 
-  await env.GUESTBOOK_DB.prepare(
-    `INSERT INTO guestbook_entries (name, message, approved, created_at)
-     VALUES (?, ?, 0, datetime('now'))`
-  ).bind(name, message).run();
+  const name = cleanText(body.name, 60);
+  const message = cleanText(body.message, 800);
 
-  return json({ ok: true, message: 'Danke! Dein Eintrag wartet auf Freigabe.' });
+  if (name.length < 2) {
+    return json({ error: 'Bitte einen Namen angeben.' }, 400);
+  }
+
+  if (message.length < 4) {
+    return json({ error: 'Bitte eine Nachricht eingeben.' }, 400);
+  }
+
+  const id = crypto.randomUUID();
+  const createdAt = new Date().toISOString();
+
+  await env.DB.prepare(
+    `INSERT INTO guestbook_entries (id, name, message, approved, created_at)
+     VALUES (?, ?, ?, 0, ?)`
+  ).bind(id, name, message, createdAt).run();
+
+  return json({
+    ok: true,
+    entry: {
+      id,
+      name,
+      message,
+      date: createdAt,
+      status: 'pending',
+    },
+  }, 201);
 }

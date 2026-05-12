@@ -1,0 +1,288 @@
+{
+  "site": {
+    "name": "Grillhütte „Gute Hoffnung“ Münster",
+    "shortName": "Gute Hoffnung",
+    "location": "Münster am Waldrand",
+    "claim": "Feiern. Grillen. Durchatmen.",
+    "subclaim": "Die Grillhütte Gute Hoffnung ist der entspannte Ort für Geburtstage, Familienfeiern und Vereinsabende im Grünen — mit Freisitz, Spielbereich und direkter Anfrage per WhatsApp.",
+    "description": "Die Grillhütte in Münster liegt wunderschön am Waldrand ca. 1 km vom Ort entfernt. Sie bietet Platz für ca. 50 Personen, ein ideales Außengelände mit Spielgeräten und Seilbahn für Kinder sowie einen überdachten Freisitz mit 40 Sitzplätzen.",
+    "phone": "+4915560562116",
+    "whatsappNumber": "4915560562116",
+    "phoneDisplay": "+49 155 60562116",
+    "email": "ghv.muenster1976@gmx.de",
+    "facebookUrl": "https://www.facebook.com/profile.php?id=100077085257645&locale=de_DE",
+    "price": "60 €",
+    "contactTimes": [
+      "Mo–Fr: 18:30–21:00 Uhr",
+      "Sa: 13:00–20:00 Uhr"
+    ],
+    "googleCalendarSrc": "https://calendar.google.com/calendar/embed?src=3d6c1df4c785c571c32dc13cd188e9f636f0c214c3554d864e9eff0c9cfd48da%40group.calendar.google.com&ctz=Europe%2FBerlin"
+  },
+  "navItems": [
+    {
+      "href": "#erlebnis",
+      "label": "Erlebnis"
+    },
+    {
+      "href": "#galerie",
+      "label": "Galerie"
+    },
+    {
+      "href": "#ausstattung",
+      "label": "Ausstattung"
+    },
+    {
+      "href": "#anfrage",
+      "label": "Anfrage"
+    },
+    {
+      "href": "#gaestebuch",
+      "label": "Gästebuch"
+    }
+  ],
+  "heroStats": [
+    {
+      "value": "60 €",
+      "label": "Tagesmiete",
+      "note": "transparent & fair"
+    },
+    {
+      "value": "ca. 50",
+      "label": "Personen",
+      "note": "ideal für Feiern"
+    },
+    {
+      "value": "40",
+      "label": "Sitzplätze",
+      "note": "überdachter Freisitz"
+    },
+    {
+      "value": "1 km",
+      "label": "vom Ort",
+      "note": "ruhig am Waldrand"
+    }
+  ],
+  "moments": [
+    {
+      "kicker": "Ankommen",
+      "title": "Raus aus dem Alltag",
+      "text": "Direkt am Waldrand, mit genug Abstand zum Trubel und trotzdem gut erreichbar."
+    },
+    {
+      "kicker": "Feiern",
+      "title": "Platz für euren Anlass",
+      "text": "Geburtstag, Familienfeier, Vereinsabend oder ein entspannter Grilltag mit Freunden."
+    },
+    {
+      "kicker": "Kinder",
+      "title": "Draußen ist was los",
+      "text": "Spielgeräte, Seilbahn und viel Fläche machen den Tag auch für Familien entspannt."
+    }
+  ],
+  "features": [
+    {
+      "icon": "👥",
+      "title": "Ca. 50 Personen",
+      "text": "Genug Platz für Geburtstage, Familienfeiern, Vereinsabende und gemütliche Grilltage."
+    },
+    {
+      "icon": "🌲",
+      "title": "Waldrandlage",
+      "text": "Ruhige Lage im Grünen, ca. 1 km vom Ort Münster entfernt."
+    },
+    {
+      "icon": "☔",
+      "title": "Überdachter Freisitz",
+      "text": "40 Sitzplätze im überdachten Außenbereich — praktisch, wenn das Wetter kippt."
+    },
+    {
+      "icon": "🛝",
+      "title": "Kinderfreundlich",
+      "text": "Außengelände mit Spielgeräten und Seilbahn."
+    },
+    {
+      "icon": "💡",
+      "title": "Wasser & Strom",
+      "text": "Wasser- und Stromanschluss sind an der Grillhütte vorhanden."
+    },
+    {
+      "icon": "🔥",
+      "title": "Feuerholz selbst mitbringen",
+      "text": "Die Hütte ist fair bepreist; Feuerholz organisiert ihr selbst."
+    }
+  ],
+  "galleryImages": [
+    {
+      "src": "/hero-grillhuette.jpg",
+      "title": "Grillhütte am Waldrand",
+      "alt": "Grillhütte Gute Hoffnung Münster am Waldrand",
+      "text": "Der erste Eindruck: Natur, Ruhe und viel Platz für einen schönen Tag."
+    },
+    {
+      "src": "/gallery/sitzgruppe.webp",
+      "title": "Außenbereich",
+      "alt": "Außenansicht der Grillhütte Gute Hoffnung Münster",
+      "text": "Freisitz, Außengelände und kurze Wege — ideal für Feiern im Grünen."
+    },
+    {
+      "src": "/gallery/seilbahn1.webp",
+      "title": "Seilbahn",
+      "alt": "Seilbahn auf dem Außengelände der Grillhütte Gute Hoffnung Münster",
+      "text": "Für Kinder oft das Highlight des Tages."
+    },
+    {
+      "src": "/gallery/seilbahn2.webp",
+      "title": "Rampe zur Seilbahn",
+      "alt": "Spielbereich mit Seilbahn an der Grillhütte Gute Hoffnung Münster",
+      "text": "Immer schön aufpassen beim hoch laufen. Es könnte jemand angerauscht kommen ;-)"
+    },
+    {
+      "src": "/gallery/seilbahn3.webp",
+      "title": "Seilbahn",
+      "alt": "Außengelände mit Seilbahn bei der Grillhütte Gute Hoffnung Münster",
+      "text": "Naturkulisse statt Betonhof — Da geht sie ab die wilde Fahrt !!!"
+    },
+    {
+      "src": "/gallery/foerderturm.webp",
+      "title": "Förderturm",
+      "alt": "Förderturm",
+      "text": "Hier steht ein Modell des Förderturms der alten Braunkohle Grube, der schon auf so manchen Umzug seine Runden gedreht hat."
+    },
+    {
+      "src": "/gallery/schaukel.webp",
+      "title": "Schaukel",
+      "alt": "Schaukel",
+      "text": "Hier kann nach Herzenslust geschaukelt werde"
+    },
+    {
+      "src": "/gallery/spielplatz.webp",
+      "title": "Spielpaltz",
+      "alt": "Spielplatz",
+      "text": "Hier können sie die Kinder austoben. Wippen, klettern, baggern, schaufeln ....."
+    },
+    {
+      "src": "/gallery/grillhuette_front1.webp",
+      "title": "Grillhütte von vorne mit Freisitz",
+      "text": "Die Hütte bietet innen Platz für bis zu 50 Personen. Im Freisitz haben auch noch mal 40 Platz"
+    },
+    {
+      "src": "/gallery/grillhuette_left.webp",
+      "title": "Seitenansicht Grillhütte"
+    },
+    {
+      "src": "/gallery/grillhuette_side.webp",
+      "title": "Grillhütte mit Sitzgruppe"
+    },
+    {
+      "src": "/gallery/sitzgruppe.webp",
+      "title": "Sitzgruppe",
+      "alt": "Sitzgruppe",
+      "text": "Hier unsere neu gebaute Sitzgruppe im Freien"
+    },
+    {
+      "src": "/gallery/torwand.webp",
+      "title": "Torwand",
+      "text": "Hier könnt ihr Eure Skills im Torwandschießen verbessern"
+    },
+    {
+      "src": "/gallery/foerderturm1.webp",
+      "title": "Braunkohlengrube Hoffnung"
+    },
+    {
+      "src": "/gallery/asche.webp",
+      "title": "Ascheplatz",
+      "text": "Folgt dem Schild und entsorgt da die Asche vom Grill"
+    },
+    {
+      "src": "/gallery/grill.webp",
+      "title": "Grill",
+      "alt": "Grill",
+      "text": "Innen ein großer Grill mit Kamin und aktivem Rauchabzug. Auch ein großer Spieß ist vorhanden um Spanferkel oder Rollbraten zuzubereiten."
+    },
+    {
+      "src": "/gallery/grill1.webp",
+      "title": "Grillen ohne Ende",
+      "alt": "Grillen ohne Ende",
+      "text": "....und auf dem Grill geht einiges :-) "
+    },
+    {
+      "src": "/gallery/toilette.webp",
+      "title": "Toilettenanlage",
+      "text": "Besonders stolz sind wir auf unsere Toiletten Anlage, die unsere alten Plumpsklo's erstetzt hat :-)"
+    },
+    {
+      "src": "/gallery/toilette1.webp",
+      "title": "Toilette von innen",
+      "alt": "Toilette von innen",
+      "text": ""
+    }
+  ],
+  "processSteps": [
+    {
+      "number": "01",
+      "title": "Kalender prüfen",
+      "text": "Schau zuerst, ob dein Wunschtermin im Kalender noch frei aussieht."
+    },
+    {
+      "number": "02",
+      "title": "Anfrage vorbereiten",
+      "text": "Name, Termin, Personenanzahl und Anlass eintragen — die Nachricht wird automatisch gebaut."
+    },
+    {
+      "number": "03",
+      "title": "WhatsApp oder E-Mail",
+      "text": "Du entscheidest, ob du die Anfrage per WhatsApp oder E-Mail absendest."
+    },
+    {
+      "number": "04",
+      "title": "Bestätigung abwarten",
+      "text": "Die endgültige Zusage kommt persönlich von den Ansprechpartnern."
+    }
+  ],
+  "guestbookSamples": [
+    {
+      "id": "sample-1",
+      "name": "Familie Schneider",
+      "date": "Sommer 2025",
+      "message": "Ein wunderschöner Ort für unseren Geburtstag. Die Kinder hatten draußen jede Menge Platz."
+    },
+    {
+      "id": "sample-2",
+      "name": "Kegelclub Münster",
+      "date": "Herbst 2025",
+      "message": "Unkomplizierte Anfrage, gute Ausstattung und genau die richtige Atmosphäre für einen Abend im Grünen."
+    },
+    {
+      "id": "sample-3",
+      "name": "Anna & Freunde",
+      "date": "Frühjahr 2026",
+      "message": "Besonders der überdachte Freisitz war super. Wir kommen gerne wieder."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Wie viel kostet die Grillhütte?",
+      "answer": "Die Miete beträgt 60 € pro Tag."
+    },
+    {
+      "question": "Für wie viele Personen ist die Grillhütte geeignet?",
+      "answer": "Die Grillhütte bietet Platz für ca. 50 Personen. Der überdachte Freisitz hat 40 Sitzplätze."
+    },
+    {
+      "question": "Gibt es Strom und Wasser?",
+      "answer": "Ja, ein Wasser- und Stromanschluss ist vorhanden."
+    },
+    {
+      "question": "Muss Feuerholz mitgebracht werden?",
+      "answer": "Ja, Feuerholz muss selbst organisiert werden."
+    },
+    {
+      "question": "Ist die Grillhütte für Kinder geeignet?",
+      "answer": "Ja, das Außengelände verfügt über Spielgeräte und eine Seilbahn für Kinder."
+    },
+    {
+      "question": "Ist die Anfrage verbindlich?",
+      "answer": "Nein. Die Anfrage ist zunächst unverbindlich. Die finale Bestätigung erfolgt persönlich."
+    }
+  ]
+}
