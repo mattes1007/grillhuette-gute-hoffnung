@@ -12,6 +12,11 @@ import {
   processSteps,
   site,
 } from '@/lib/site';
+function getWebpSource(src?: string) {
+  if (!src) return '';
+  return src.replace(/\.(jpg|jpeg|png)$/i, '.webp');
+}
+
 
 type InquiryForm = {
   name: string;
@@ -233,6 +238,8 @@ function Experience() {
 }
 
 function Gallery() {
+  const visibleGalleryImages = galleryImages.filter((image) => image?.src);
+
   return (
     <section id="galerie" className="mx-auto max-w-7xl px-5 py-20 lg:px-6">
       <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
@@ -247,16 +254,16 @@ function Gallery() {
       </div>
 
       <div className="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-6">
-        {galleryImages.map((image, index) => (
+        {visibleGalleryImages.map((image, index) => (
           <figure
-            key={image.src}
+            key={`${image.src}-${index}`}
             className={`gallery-card group overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.055] p-2 shadow-2xl shadow-black/20 backdrop-blur ${
               index === 0 ? 'md:col-span-2 lg:col-span-4 lg:row-span-2' : 'lg:col-span-2'
             }`}
           >
             <div className="relative overflow-hidden rounded-[1.45rem]">
               <picture>
-                <source srcSet={image.src.replace(/\.jpg$/, '.webp')} type="image/webp" />
+                <source srcSet={getWebpSource(image.src)} type="image/webp" />
                 <img
                   src={image.src}
                   alt={image.alt}
